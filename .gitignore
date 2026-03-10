@@ -21,3 +21,6 @@ go.work.sum
 # Build output
 /bin/
 /dist/
+
+# Environment variables
+.env
