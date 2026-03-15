@@ -55,6 +55,18 @@ func MakeRefreshToken() string {
 	return hex.EncodeToString(b)
 }
 
+func GetAPIKey(headers http.Header) (string, error) {
+	authHeader := headers.Get("Authorization")
+	if authHeader == "" {
+		return "", errors.New("authorization header not found")
+	}
+	after, found := strings.CutPrefix(authHeader, "ApiKey ")
+	if !found {
+		return "", errors.New("authorization header malformed")
+	}
+	return strings.TrimSpace(after), nil
+}
+
 func GetBearerToken(headers http.Header) (string, error) {
 	authHeader := headers.Get("Authorization")
 	if authHeader == "" {
